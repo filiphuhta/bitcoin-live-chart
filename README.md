@@ -1,6 +1,6 @@
 # Getting Started with Bitcoin-live-chart
 
-This is an project made with https://coincap.io/ api for cryptocurrency. The purpose of the project is to display real-time data from cryptocurrencys.
+This is an project made with https://coincap.io/ api for cryptocurrency. The purpose of the project is to display real-time data for cryptocurrencys.
 
 ## Available Scripts
 
