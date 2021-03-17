@@ -1,6 +1,6 @@
-# Getting Started with Create React App
+# Getting Started with Bitcoin-live-chart
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This is an project made with https://coincap.io/ api for cryptocurrency. The purpose of the project is to display real-time data for cryptocurrencys. (The application is not done yet.)
 
 ## Available Scripts
 
