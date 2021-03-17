@@ -6,6 +6,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 function Bitcoin() {
   return (
     <BitcoinTable></BitcoinTable>
+    
   );
 }
 
@@ -15,12 +16,13 @@ export class BitcoinTable extends React.Component {
     this.state = {
       error: null,
       isLoaded: false,
-      items: []
+      items: [],
+      coinHistoryData: null
     };
   }
 
-  componentDidMount() {
-    fetch("https://api.coincap.io/v2/assets", {
+  getPriceHistory(coinId) {
+    fetch("https://api.coincap.io/v2/assets/"+coinId+"/history?interval=d1", {
       headers : { 
         'Content-Type': 'application/json',
         'Accept': 'application/json'
@@ -32,13 +34,33 @@ export class BitcoinTable extends React.Component {
         (result) => {
           console.log(result.data);
           this.setState({
+            coinHistoryData: result.data
+          });
+        },
+        (error) => {
+          console.log(error);
+          this.setState({
+            error
+          });
+        }
+      )
+  }
+  componentDidMount() {
+    fetch("https://api.coincap.io/v2/assets", {
+      headers : { 
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+       }
+
+    })
+      .then(res => res.json())
+      .then(
+        (result) => {
+          this.setState({
             isLoaded: true,
             items: result.data
           });
         },
-        // Note: it's important to handle errors here
-        // instead of a catch() block so that we don't swallow
-        // exceptions from actual bugs in components.
         (error) => {
           console.log(error);
           this.setState({
@@ -48,12 +70,13 @@ export class BitcoinTable extends React.Component {
         }
       )
   }
+  handler = (selectedRow) => {
+    console.log(selectedRow)
+    this.getPriceHistory(selectedRow);
+}
 
   render() {
     const { error, isLoaded, items } = this.state;
-    items.forEach(function(entry) {
-      console.log(entry);
-    });
     if (error) {
       return <div>Error: {error.message}</div>;
     } else if (!isLoaded) {
@@ -71,11 +94,14 @@ export class BitcoinTable extends React.Component {
   </thead>
   <tbody>
   {items.map(item => (
-    <tr key={item.id}>
+    <tr key={item.id} onClick={() => this.handler(item.id)}>
       <td>{item.rank}</td>
       <td>{item.name}</td>
       <td>{item.priceUsd}</td>
       <td>{item.supply}</td>
+      <td><button type="button" class="btn btn-outline-success" data-toggle="modal" data-target="#exampleModal">
+  Price History
+</button></td>
     </tr> ))}
   </tbody>
 </table>
