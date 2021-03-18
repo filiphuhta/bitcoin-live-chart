@@ -1,7 +1,10 @@
 
 import './App.css';
 import React from 'react'
-import 'bootstrap/dist/css/bootstrap.css';
+import Jumbotron from 'react-bootstrap/Jumbotron'
+import Navbar from 'react-bootstrap/Navbar';
+import Container from 'react-bootstrap/Container'
+import logo from './assets/bitcoin-Logo.png';
 
 function App() {
   return (
@@ -13,19 +16,27 @@ class Header extends React.Component {
   
   render() {
       return (
-        <html>
-        <nav class="navbar navbar-dark bg-dark navbar-fixed-top">
-  <a class="navbar-brand">Crypto Currency</a>
-  <form class="form-inline">
-    <input class="form-control mr-sm-2" type="search" placeholder="Filter" aria-label="Search"></input>
-  </form>
-</nav>
+        <div>
+<Navbar bg="dark" variant="dark" className="fixed-top-nav">
+    <Navbar.Brand href="#home">
+      <img
+        alt=""
+        src={logo}
+        width="50"
+        height="30"
+        className="d-inline-block align-top"
+      />{' '}
+      Crypto Currency
+    </Navbar.Brand>
+  </Navbar>
 
-<div class="jumbotron mb-0">
-  <h1 class="display-4">Welcome to Crypto currency </h1>
-  <p class="lead">This is a simple application for displaying real-time prices for cryptocurrencies.</p>
+<Jumbotron fluid className="mb-0">
+  <Container>
+  <h1>Welcome to Crypto currency </h1>
+  <p>This is a simple application for displaying real-time prices for cryptocurrencies.</p>
+  </Container>
+</Jumbotron>
 </div>
-</html>
       );
     }
 }

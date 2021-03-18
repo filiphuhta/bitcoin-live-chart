@@ -1,21 +1,18 @@
-import React from 'react';
+import React, { Component } from 'react'
 import { VictoryChart, VictoryLine, VictoryZoomContainer, VictoryBrushContainer, VictoryAxis} from 'victory';
-import 'bootstrap/dist/css/bootstrap.css';
+import Modal from 'react-bootstrap/Modal'
+import Button from 'react-bootstrap/Button'
 
-function HistoryChart() {
-    return (
-      <History></History>
-      
-    );
-  }
-
-class History extends React.Component {
+class History extends Component {
     constructor() {
       super();
       this.state = {
         zoomDomain: { x: [new Date(1990, 1, 1), new Date(2009, 1, 1)] }
       };
     }
+
+
+    handleChange = e => this.setState({ [e.target.id]: e.target.value });
   
     handleZoom(domain) {
       this.setState({ zoomDomain: domain });
@@ -23,17 +20,11 @@ class History extends React.Component {
   
     render() {
       return (
-        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-        <div  class="container">
+        <Modal show={this.props.showModal}>
+        <Modal.Header closeButton>
+          <Modal.Title>Modal heading</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>Woohoo, you're reading this text in a modal!
           <VictoryChart width={600} height={300} scale={{ x: "time" }}
             containerComponent={
               <VictoryZoomContainer
@@ -94,17 +85,18 @@ class History extends React.Component {
                 y="b"
               />
             </VictoryChart>
-        </div>
-        </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
-      </div>
-    </div>
-  </div>
-</div>
+  </Modal.Body>
+  <Modal.Footer>
+          <Button variant="secondary">
+            Close
+          </Button>
+          <Button variant="primary">
+            Save Changes
+          </Button>
+        </Modal.Footer>
+      </Modal>
       );
     }
   }
   
-  export default HistoryChart;
+  export default History;

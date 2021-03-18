@@ -6,3 +6,6 @@
   position: sticky;
   top: 0;
 }
+.jumbotron-zero-margin {
+  margin-bottom: 0;
+}

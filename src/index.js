@@ -4,8 +4,7 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import Bitcoin from './components/Bitcoin';
-import History from './components/HistoryChart';
-import 'bootstrap/dist/css/bootstrap.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 
 
@@ -14,7 +13,6 @@ import 'bootstrap/dist/css/bootstrap.css';
 ReactDOM.render(
   <React.StrictMode>
     <App/>
-    <History/>
     <Bitcoin />
   </React.StrictMode>,
   document.getElementById('root')

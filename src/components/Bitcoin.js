@@ -1,24 +1,31 @@
 import './Bitcoin.css';
-import React from 'react'
-import 'bootstrap/dist/css/bootstrap.css';
+import React, { Component } from 'react'
+import History  from './HistoryChart';
+import Button from 'react-bootstrap/Button';
+import Table from 'react-bootstrap/Table';
 
 
 function Bitcoin() {
   return (
     <BitcoinTable></BitcoinTable>
-    
   );
 }
 
-export class BitcoinTable extends React.Component {
+export class BitcoinTable extends Component {
   constructor(props) {
     super(props);
+    this.showModal = this.showModal.bind(this);
     this.state = {
       error: null,
       isLoaded: false,
       items: [],
-      coinHistoryData: null
+      coinHistoryData: null,
+      showModal: false
     };
+  }
+
+  showModal() {
+    this.setState({ showModal: true });
   }
 
   getPriceHistory(coinId) {
@@ -34,7 +41,8 @@ export class BitcoinTable extends React.Component {
         (result) => {
           console.log(result.data);
           this.setState({
-            coinHistoryData: result.data
+            coinHistoryData: result.data,
+            showModal: true
           });
         },
         (error) => {
@@ -83,13 +91,14 @@ export class BitcoinTable extends React.Component {
       return <div>Loading...</div>;
     } else {
       return (
-        <table  class="table table-dark table-striped">   
+        <div>
+          <Table striped bordered hover variant="dark">
   <thead>
     <tr>
-      <th scope="col">Rank</th>
-      <th scope="col">Name</th>
-      <th scope="col">Price</th>
-      <th scope="col">Supply</th>
+      <th>Rank</th>
+      <th>Name</th>
+      <th>Price</th>
+      <th>Supply</th>
     </tr>
   </thead>
   <tbody>
@@ -99,12 +108,14 @@ export class BitcoinTable extends React.Component {
       <td>{item.name}</td>
       <td>{item.priceUsd}</td>
       <td>{item.supply}</td>
-      <td><button type="button" class="btn btn-outline-success" data-toggle="modal" data-target="#exampleModal">
-  Price History
-</button></td>
+      <td>
+      <Button variant="outline-success" onClick={() => this.setState({ showModal: true })}  >Price History </Button>
+        </td>
     </tr> ))}
   </tbody>
-</table>
+</Table>
+<History show={this.state.showModal}></History>
+</div>
       );
     }
   }
