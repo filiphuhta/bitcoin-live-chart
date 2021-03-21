@@ -4,6 +4,7 @@ import Button from 'react-bootstrap/Button'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Container from 'react-bootstrap/Container'
+import './History.css';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 
 class History extends Component {
@@ -15,14 +16,9 @@ class History extends Component {
           <Modal.Title>{this.props.name}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-        <Container>
-          <Row>
-            <Col>
-            <LineChart
-  width={600}
-  height={600}
-  data={this.props.historyData}
-  margin={{ top: 500, right: 20, left: 10, bottom: 5 }}
+        <ResponsiveContainer  width="95%" height={400}>
+            <LineChart id="container"
+  data={this.props.historyData} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
 >
   <XAxis dataKey="date" />
   <yAxis dataKey="priceUsd" />
@@ -30,10 +26,7 @@ class History extends Component {
   <CartesianGrid stroke="#f5f5f5" />
   <Line type="monotone" dataKey="priceUsd" stroke="#ff7300" yAxisId={0} />
 </LineChart>
-            </Col>
-          </Row>
-        </Container>
-          
+</ResponsiveContainer>  
   </Modal.Body>
   <Modal.Footer>
           <Button variant="outline-success" onClick={this.props.close}>

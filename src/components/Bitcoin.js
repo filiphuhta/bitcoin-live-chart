@@ -1,4 +1,3 @@
-import './Bitcoin.css';
 import React, { Component } from 'react'
 import History  from './History';
 import Button from 'react-bootstrap/Button';
