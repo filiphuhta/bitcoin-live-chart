@@ -17,7 +17,7 @@ class History extends Component {
         <Modal.Body>
         <ResponsiveContainer  width="95%" height={400}>
             <LineChart id="container"
-  data={this.props.historyData} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
+  data={this.props.historyData} margin={{ top: 100, right: 30, left: 20, bottom: 5 }}
 >
   <XAxis dataKey="date" />
   <yAxis dataKey="priceUsd" />

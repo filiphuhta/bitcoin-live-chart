@@ -120,8 +120,8 @@ if(element.id === el) {
     <tr key={item.id} onClick={() => this.handler(item.id)}>
       <td>{item.rank}</td>
       <td>{item.name}</td>
-      <td>{item.priceUsd}</td>
-      <td>{item.supply}</td>
+      <td>{Math.round(item.priceUsd* 100)/ 100} USD</td>
+      <td>{Math.round(item.supply* 100)/ 100}</td>
       <td>
       <Button variant="outline-success" onClick={this.togglePopup}  >Price History </Button>
         </td>
