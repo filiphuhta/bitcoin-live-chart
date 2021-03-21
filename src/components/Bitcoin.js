@@ -1,8 +1,9 @@
 import './Bitcoin.css';
 import React, { Component } from 'react'
-import History  from './HistoryChart';
+import History  from './History';
 import Button from 'react-bootstrap/Button';
 import Table from 'react-bootstrap/Table';
+import * as rxjs from 'rxjs';
 
 
 function Bitcoin() {
@@ -14,19 +15,22 @@ function Bitcoin() {
 export class BitcoinTable extends Component {
   constructor(props) {
     super(props);
-    this.showModal = this.showModal.bind(this);
+    this.togglePopup = this.togglePopup.bind(this);
     this.state = {
       error: null,
       isLoaded: false,
       items: [],
       coinHistoryData: null,
-      showModal: false
+      showModal: false,
+      cryptoName: null
     };
   }
 
-  showModal() {
-    this.setState({ showModal: true });
-  }
+  togglePopup() {
+    this.setState({
+        showModal: !this.state.showModal
+    });
+}
 
   getPriceHistory(coinId) {
     fetch("https://api.coincap.io/v2/assets/"+coinId+"/history?interval=d1", {
@@ -42,7 +46,6 @@ export class BitcoinTable extends Component {
           console.log(result.data);
           this.setState({
             coinHistoryData: result.data,
-            showModal: true
           });
         },
         (error) => {
@@ -78,8 +81,20 @@ export class BitcoinTable extends Component {
         }
       )
   }
+
+  check(arr, el) {
+arr.some(element => {
+if(element.id === el) {
+  this.setState({
+    cryptoName: element.name
+  });
+}
+});
+
+  }
+
   handler = (selectedRow) => {
-    console.log(selectedRow)
+    this.check(this.state.items, selectedRow);
     this.getPriceHistory(selectedRow);
 }
 
@@ -109,12 +124,12 @@ export class BitcoinTable extends Component {
       <td>{item.priceUsd}</td>
       <td>{item.supply}</td>
       <td>
-      <Button variant="outline-success" onClick={() => this.setState({ showModal: true })}  >Price History </Button>
+      <Button variant="outline-success" onClick={this.togglePopup}  >Price History </Button>
         </td>
     </tr> ))}
   </tbody>
 </Table>
-<History show={this.state.showModal}></History>
+<History show={this.state.showModal} name={this.state.cryptoName} historyData={this.state.coinHistoryData} close={this.togglePopup}/>
 </div>
       );
     }
